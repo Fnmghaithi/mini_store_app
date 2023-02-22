@@ -19,6 +19,7 @@ class AppBarIcons extends StatelessWidget {
         },
         child: Container(
           decoration: BoxDecoration(
+            shape: BoxShape.circle,
             color: Theme.of(context).cardColor,
           ),
           child: Padding(
