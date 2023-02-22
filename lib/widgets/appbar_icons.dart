@@ -11,23 +11,22 @@ class AppBarIcons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // return Padding(
-    //   padding: const EdgeInsets.all(4.0),
-    //   child: GestureDetector(
-    //     onTap: () {
-    //       function();
-    //     },
-    //     child: Container(
-    //       decoration: BoxDecoration(
-    //         color: Theme.of(context).cardColor,
-    //       ),
-    //       child: Padding(
-    //         padding: const EdgeInsets.all(6.0),
-    //         child: Icon(icon),
-    //       ),
-    //     ),
-    //   ),
-    // );
-    return Scaffold();
+    return Padding(
+      padding: const EdgeInsets.all(4.0),
+      child: GestureDetector(
+        onTap: () {
+          function();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(6.0),
+            child: Icon(icon),
+          ),
+        ),
+      ),
+    );
   }
 }
