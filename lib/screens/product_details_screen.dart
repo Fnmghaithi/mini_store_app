@@ -3,14 +3,14 @@ import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 
-class ProductDetails extends StatefulWidget {
-  const ProductDetails({super.key});
+class ProductDetailsScreen extends StatefulWidget {
+  const ProductDetailsScreen({super.key});
 
   @override
-  State<ProductDetails> createState() => _ProductDetailsState();
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
 }
 
-class _ProductDetailsState extends State<ProductDetails> {
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;

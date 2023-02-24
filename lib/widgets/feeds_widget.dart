@@ -1,6 +1,7 @@
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_iconly/flutter_iconly.dart';
+import 'package:page_transition/page_transition.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:store_api_flutter_course/screens/product_details_screen.dart';
 
@@ -18,9 +19,11 @@ class FeedsWidget extends StatelessWidget {
         child: InkWell(
           borderRadius: BorderRadius.circular(8.0),
           onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (context) => const ProductDetails(),
+            Navigator.push(
+              context,
+              PageTransition(
+                child: const ProductDetailsScreen(),
+                type: PageTransitionType.fade,
               ),
             );
           },
