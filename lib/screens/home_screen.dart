@@ -5,6 +5,7 @@ import 'package:page_transition/page_transition.dart';
 import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:store_api_flutter_course/screens/categories_screen.dart';
 import 'package:store_api_flutter_course/screens/feeds_screen.dart';
+import 'package:store_api_flutter_course/screens/users_screen.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
@@ -55,7 +56,15 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
           actions: [
             AppBarIcons(
-              function: () {},
+              function: () {
+                Navigator.push(
+                  context,
+                  PageTransition(
+                    child: const UsersScreen(),
+                    type: PageTransitionType.fade,
+                  ),
+                );
+              },
               icon: IconlyBold.user3,
             ),
           ],
@@ -91,6 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 18),
               Expanded(
                 child: SingleChildScrollView(
                   child: Column(
@@ -147,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           crossAxisCount: 2,
                           crossAxisSpacing: 0,
                           mainAxisSpacing: 0,
-                          childAspectRatio: 0.6,
+                          childAspectRatio: 0.7,
                         ),
                         itemBuilder: (context, index) {
                           return const FeedsWidget();

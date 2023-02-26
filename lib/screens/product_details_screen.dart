@@ -75,7 +75,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                       return FancyShimmerImage(
                         width: double.infinity,
                         boxFit: BoxFit.fill,
-                        imageUrl: 'https://i.ibb.co/vwB46Yq/shoes.png',
+                        imageUrl: 'https://placeimg.com/640/480/any',
                       );
                     },
                     autoplay: true,

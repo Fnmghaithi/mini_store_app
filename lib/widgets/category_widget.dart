@@ -11,37 +11,34 @@ class CategoryWidget extends StatelessWidget {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        color: Colors.blue,
-        child: Stack(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: FancyShimmerImage(
-                height: size.width * 0.45,
-                width: size.width * 0.45,
-                errorWidget: const Icon(
-                  IconlyBold.danger,
-                  color: Colors.red,
-                  size: 28,
-                ),
-                imageUrl: 'https://i.ibb.co/vwB46Yq/shoes.png',
-                boxFit: BoxFit.fill,
+      child: Stack(
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(12),
+            child: FancyShimmerImage(
+              height: size.width * 0.45,
+              width: size.width * 0.45,
+              errorWidget: const Icon(
+                IconlyBold.danger,
+                color: Colors.red,
+                size: 28,
+              ),
+              imageUrl: 'https://placeimg.com/640/480/any',
+              boxFit: BoxFit.fill,
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              'Category Name',
+              style: TextStyle(
+                fontSize: 22,
+                fontWeight: FontWeight.bold,
+                backgroundColor: lightCardColor.withOpacity(0.7),
               ),
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                'Category Name',
-                style: TextStyle(
-                  fontSize: 22,
-                  fontWeight: FontWeight.bold,
-                  backgroundColor: lightCardColor.withOpacity(0.7),
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
