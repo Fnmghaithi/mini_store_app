@@ -21,7 +21,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _textEditingController;
-  List<ProductsModel> productsList = [];
+  // List<ProductsModel> productsList = [];
 
   @override
   void initState() {
@@ -35,16 +35,16 @@ class _HomeScreenState extends State<HomeScreen> {
     super.dispose();
   }
 
-  @override
-  void didChangeDependencies() {
-    getProducts();
-    super.didChangeDependencies();
-  }
+  // @override
+  // void didChangeDependencies() {
+  //   getProducts();
+  //   super.didChangeDependencies();
+  // }
 
-  Future<void> getProducts() async {
-    productsList = await APIHandler().getAllProducts();
-    setState(() {});
-  }
+  // Future<void> getProducts() async {
+  //   productsList = await APIHandler().getAllProducts();
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -149,36 +149,55 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             AppBarIcons(
                               function: () {
-                                Navigator.push(
-                                  context,
-                                  PageTransition(
-                                    child: FeedsScreen(
-                                      productsList: productsList,
-                                    ),
-                                    type: PageTransitionType.fade,
-                                  ),
-                                );
+                                // Navigator.push(
+                                //   context,
+                                //   PageTransition(
+                                //     child: FeedsScreen(
+                                //       productsList: productsList,
+                                //     ),
+                                //     type: PageTransitionType.fade,
+                                //   ),
+                                // );
                               },
                               icon: IconlyBold.arrowRight2,
                             )
                           ],
                         ),
                       ),
-                      GridView.builder(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemCount: productsList.length,
-                        gridDelegate:
-                            const SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                          crossAxisSpacing: 0,
-                          mainAxisSpacing: 0,
-                          childAspectRatio: 0.65,
-                        ),
-                        itemBuilder: (context, index) {
-                          return FeedsWidget(
-                            imageUrl: productsList[index].images![0],
-                            title: productsList[index].title!,
+                      FutureBuilder<List<ProductsModel>>(
+                        future: APIHandler().getAllProducts(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                              child: CircularProgressIndicator(),
+                            );
+                          } else if (snapshot.hasError) {
+                            Center(
+                              child: Text('An error occured ${snapshot.error}'),
+                            );
+                          } else if (snapshot.data == null) {
+                            const Center(
+                              child: Text('No products has been added yet'),
+                            );
+                          }
+                          return GridView.builder(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemCount: snapshot.data!.length,
+                            gridDelegate:
+                                const SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: 2,
+                              crossAxisSpacing: 0,
+                              mainAxisSpacing: 0,
+                              childAspectRatio: 0.65,
+                            ),
+                            itemBuilder: (context, index) {
+                              return FeedsWidget(
+                                imageUrl: snapshot.data![index].images![0],
+                                title: snapshot.data![index].title!,
+                              );
+                            },
                           );
                         },
                       ),

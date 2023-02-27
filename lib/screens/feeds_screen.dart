@@ -14,23 +14,27 @@ class FeedsScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('All Products'),
       ),
-      body: GridView.builder(
-        // shrinkWrap: true,
-        // physics: const NeverScrollableScrollPhysics(),
-        itemCount: productsList.length,
-        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2,
-          crossAxisSpacing: 0,
-          mainAxisSpacing: 0,
-          childAspectRatio: 0.65,
-        ),
-        itemBuilder: (context, index) {
-          return FeedsWidget(
-            imageUrl: productsList[index].images![0],
-            title: productsList[index].title!,
-          );
-        },
-      ),
+      body: productsList.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : GridView.builder(
+              // shrinkWrap: true,
+              // physics: const NeverScrollableScrollPhysics(),
+              itemCount: productsList.length,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 0,
+                childAspectRatio: 0.65,
+              ),
+              itemBuilder: (context, index) {
+                return FeedsWidget(
+                  imageUrl: productsList[index].images![0],
+                  title: productsList[index].title!,
+                );
+              },
+            ),
     );
   }
 }
