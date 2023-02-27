@@ -22,7 +22,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _textEditingController;
-  // List<ProductsModel> productsList = [];
+  List<ProductsModel> productsList = [];
 
   @override
   void initState() {
@@ -150,15 +150,15 @@ class _HomeScreenState extends State<HomeScreen> {
                             const Spacer(),
                             AppBarIcons(
                               function: () {
-                                // Navigator.push(
-                                //   context,
-                                //   PageTransition(
-                                //     child: FeedsScreen(
-                                //       productsList: productsList,
-                                //     ),
-                                //     type: PageTransitionType.fade,
-                                //   ),
-                                // );
+                                Navigator.push(
+                                  context,
+                                  PageTransition(
+                                    child: FeedsScreen(
+                                      productsList: productsList,
+                                    ),
+                                    type: PageTransitionType.fade,
+                                  ),
+                                );
                               },
                               icon: IconlyBold.arrowRight2,
                             )
@@ -182,7 +182,8 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text('No products has been added yet'),
                             );
                           }
-                          return FeedsGridView(productsList: snapshot.data!);
+                          productsList = snapshot.data!;
+                          return FeedsGridView(productsList: productsList);
                         },
                       ),
                     ],

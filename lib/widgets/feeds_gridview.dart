@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 
@@ -22,9 +23,9 @@ class FeedsGridView extends StatelessWidget {
         childAspectRatio: 0.65,
       ),
       itemBuilder: (context, index) {
-        return FeedsWidget(
-          imageUrl: productsList[index].images![0],
-          title: productsList[index].title!,
+        return ChangeNotifierProvider.value(
+          value: productsList[index],
+          child: const FeedsWidget(),
         );
       },
     );
