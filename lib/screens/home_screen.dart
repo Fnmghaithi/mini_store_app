@@ -9,6 +9,7 @@ import 'package:store_api_flutter_course/screens/feeds_screen.dart';
 import 'package:store_api_flutter_course/screens/users_screen.dart';
 import 'package:store_api_flutter_course/services/api_handler.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
+import 'package:store_api_flutter_course/widgets/feeds_gridview.dart';
 import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
 
@@ -181,24 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               child: Text('No products has been added yet'),
                             );
                           }
-                          return GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: snapshot.data!.length,
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 0,
-                              mainAxisSpacing: 0,
-                              childAspectRatio: 0.65,
-                            ),
-                            itemBuilder: (context, index) {
-                              return FeedsWidget(
-                                imageUrl: snapshot.data![index].images![0],
-                                title: snapshot.data![index].title!,
-                              );
-                            },
-                          );
+                          return FeedsGridView(productsList: snapshot.data!);
                         },
                       ),
                     ],
