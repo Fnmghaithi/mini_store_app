@@ -6,7 +6,12 @@ import 'package:store_api_flutter_course/consts/global_colors.dart';
 import 'package:store_api_flutter_course/screens/product_details_screen.dart';
 
 class FeedsWidget extends StatelessWidget {
-  const FeedsWidget({super.key});
+  const FeedsWidget({
+    super.key,
+    required this.title,
+    required this.imageUrl,
+  });
+  final String title, imageUrl;
 
   @override
   Widget build(BuildContext context) {
@@ -73,18 +78,18 @@ class FeedsWidget extends StatelessWidget {
                     color: Colors.red,
                     size: 28,
                   ),
-                  imageUrl: 'https://placeimg.com/640/480/any',
+                  imageUrl: imageUrl,
                   boxFit: BoxFit.fill,
                 ),
               ),
               const SizedBox(height: 10),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  'Title',
+                  title,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
-                  style: TextStyle(
+                  style: const TextStyle(
                     fontSize: 17.0,
                     fontWeight: FontWeight.w700,
                   ),

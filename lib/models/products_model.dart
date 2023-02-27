@@ -32,4 +32,10 @@ class ProductsModel {
         ? CategoriesModel.fromJson(json['category'])
         : null;
   }
+
+  static List<ProductsModel> productsFromJson(List productFromJson) {
+    return productFromJson.map((data) {
+      return ProductsModel.fromJson(data);
+    }).toList();
+  }
 }
