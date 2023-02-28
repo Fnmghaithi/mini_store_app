@@ -2,13 +2,14 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:store_api_flutter_course/consts/api_consts.dart';
+import 'package:store_api_flutter_course/models/categories_model.dart';
 import 'package:store_api_flutter_course/models/products_model.dart';
 
 class APIHandler {
-  Future<List<ProductsModel>> getAllProducts() async {
+  Future<List<dynamic>> getData({required String target}) async {
     var uri = Uri.https(
       BASE_URL,
-      'api/v1/products',
+      'api/v1/$target',
     );
     http.Response response = await http.get(uri);
 
@@ -19,6 +20,18 @@ class APIHandler {
       tempList.add(value);
     }
 
-    return ProductsModel.productsFromJson(tempList);
+    return tempList;
+  }
+
+  Future<List<ProductsModel>> getAllProducts() async {
+    List temp = await getData(target: 'products');
+
+    return ProductsModel.productsFromJson(temp);
+  }
+
+  Future<List<CategoriesModel>> getAllCategories() async {
+    List temp = await getData(target: 'categories');
+    print(temp);
+    return CategoriesModel.categoriesFromJson(temp);
   }
 }
