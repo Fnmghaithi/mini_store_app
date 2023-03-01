@@ -10,7 +10,6 @@ import 'package:store_api_flutter_course/screens/users_screen.dart';
 import 'package:store_api_flutter_course/services/api_handler.dart';
 import 'package:store_api_flutter_course/widgets/appbar_icons.dart';
 import 'package:store_api_flutter_course/widgets/feeds_gridview.dart';
-import 'package:store_api_flutter_course/widgets/feeds_widget.dart';
 import 'package:store_api_flutter_course/widgets/sale_widget.dart';
 
 class HomeScreen extends StatefulWidget {

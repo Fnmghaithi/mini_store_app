@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:card_swiper/card_swiper.dart';
 import 'package:fancy_shimmer_image/fancy_shimmer_image.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +20,16 @@ class ProductDetailsScreen extends StatefulWidget {
 
 class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
   ProductsModel? product;
+  bool isError = false;
+  String errorString = '';
   Future<void> getProductInfo() async {
-    product = await APIHandler().getProductByID(id: widget.id);
+    try {
+      product = await APIHandler().getProductByID(id: widget.id);
+    } catch (error) {
+      isError = true;
+      errorString = error.toString();
+      log('error $error');
+    }
     setState(() {});
   }
 
@@ -35,110 +45,114 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     return Scaffold(
       appBar: AppBar(),
       body: SafeArea(
-        child: product == null
-            ? const Center(
-                child: CircularProgressIndicator(),
+        child: isError
+            ? Center(
+                child: Text('An Error occured $errorString'),
               )
-            : SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        product!.category!.name!,
-                        style: const TextStyle(
-                          fontSize: 20,
-                          fontWeight: FontWeight.w700,
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            : product == null
+                ? const Center(
+                    child: CircularProgressIndicator(),
+                  )
+                : SingleChildScrollView(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Flexible(
-                            flex: 2,
-                            child: Text(
-                              product!.title!,
-                              style: const TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
+                          Text(
+                            product!.category!.name!,
+                            style: const TextStyle(
+                              fontSize: 20,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                          const SizedBox(height: 18),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Flexible(
+                                flex: 2,
+                                child: Text(
+                                  product!.title!,
+                                  style: const TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                              Flexible(
+                                flex: 1,
+                                child: RichText(
+                                  text: TextSpan(
+                                    text: '\$',
+                                    style: const TextStyle(
+                                      fontSize: 25,
+                                      color: Color.fromRGBO(33, 150, 243, 1),
+                                    ),
+                                    children: [
+                                      TextSpan(
+                                        text: product!.price.toString(),
+                                        style: TextStyle(
+                                          color: lightTextColor,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: size.height * 0.4,
+                            child: Swiper(
+                              itemCount: product!.images!.length,
+                              itemBuilder: (context, index) {
+                                return FancyShimmerImage(
+                                  width: double.infinity,
+                                  boxFit: BoxFit.fill,
+                                  imageUrl: product!.images![index],
+                                );
+                              },
+                              autoplay: true,
+                              pagination: const SwiperPagination(
+                                alignment: Alignment.bottomCenter,
+                                builder: DotSwiperPaginationBuilder(
+                                  activeColor: Colors.red,
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
-                          Flexible(
-                            flex: 1,
-                            child: RichText(
-                              text: TextSpan(
-                                text: '\$',
-                                style: const TextStyle(
-                                  fontSize: 25,
-                                  color: Color.fromRGBO(33, 150, 243, 1),
-                                ),
-                                children: [
-                                  TextSpan(
-                                    text: product!.price.toString(),
-                                    style: TextStyle(
-                                      color: lightTextColor,
-                                      fontWeight: FontWeight.bold,
-                                    ),
+                          const SizedBox(height: 18),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  'Description',
+                                  textAlign: TextAlign.start,
+                                  style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.bold,
                                   ),
-                                ],
-                              ),
+                                ),
+                                const SizedBox(height: 18),
+                                Text(
+                                  product!.description!,
+                                  textAlign: TextAlign.start,
+                                  style: const TextStyle(
+                                    fontSize: 25,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ],
                       ),
-                      SizedBox(
-                        height: size.height * 0.4,
-                        child: Swiper(
-                          itemCount: product!.images!.length,
-                          itemBuilder: (context, index) {
-                            return FancyShimmerImage(
-                              width: double.infinity,
-                              boxFit: BoxFit.fill,
-                              imageUrl: product!.images![index],
-                            );
-                          },
-                          autoplay: true,
-                          pagination: const SwiperPagination(
-                            alignment: Alignment.bottomCenter,
-                            builder: DotSwiperPaginationBuilder(
-                              activeColor: Colors.red,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 18),
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              'Description',
-                              textAlign: TextAlign.start,
-                              style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                            const SizedBox(height: 18),
-                            Text(
-                              product!.description!,
-                              textAlign: TextAlign.start,
-                              style: const TextStyle(
-                                fontSize: 25,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
-                ),
-              ),
       ),
     );
   }
