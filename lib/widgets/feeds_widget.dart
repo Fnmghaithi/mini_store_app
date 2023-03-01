@@ -28,7 +28,9 @@ class FeedsWidget extends StatelessWidget {
             Navigator.push(
               context,
               PageTransition(
-                child: const ProductDetailsScreen(),
+                child: ProductDetailsScreen(
+                  id: productsModelProvider.id.toString(),
+                ),
                 type: PageTransitionType.fade,
               ),
             );
